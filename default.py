@@ -39,6 +39,10 @@ def key_image(deck, key, asset, title):
         deck.set_key_image(key, image)
 
 def key_change(deck, key, state):
+    # only operate on key down
+    if state != 1:
+        return
+
     if key == 0:
         # restart vagrant
         # open terminal
