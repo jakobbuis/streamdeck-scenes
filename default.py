@@ -53,7 +53,7 @@ if __name__ == "__main__":
         deck.reset()
 
         # Set initial screen brightness to 30%.
-        deck.set_brightness(80)
+        deck.set_brightness(50)
 
         # render keys
         key_image(deck, 0, 'vs-code.png', 'Build')
