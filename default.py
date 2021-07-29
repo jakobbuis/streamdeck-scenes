@@ -49,7 +49,7 @@ def key_change(deck, key, state):
         # layout screen
         os.system('firefox')
         os.system('code')
-        os.system('terminal')
+        os.system('terminator --working-directory=~/code')
     elif key == 4:
         os.system('systemctl suspend')
 
