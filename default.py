@@ -39,13 +39,15 @@ def key_image(deck, key, asset, title):
         deck.set_key_image(key, image)
 
 def key_change(deck, key, state):
-    if (key == 0):
+    if key == 0:
         # restart vagrant
         # open terminal
         # layout screen
         os.system('firefox')
         os.system('code')
         os.system('terminal')
+    elif key == 4:
+        os.system('systemctl suspend')
 
 if __name__ == "__main__":
     for index, deck in enumerate(DeviceManager().enumerate()):
@@ -57,6 +59,7 @@ if __name__ == "__main__":
 
         # render keys
         key_image(deck, 0, 'vs-code.png', 'Build')
+        key_image(deck, 4, 'pause.png', 'Suspend')
 
         # actions
         deck.set_key_callback(key_change)
