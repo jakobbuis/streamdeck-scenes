@@ -12,6 +12,12 @@ from src.StreamDeck.ImageHelpers import PILHelper
 # Folder location of image assets used by this example.
 ASSETS_PATH = os.path.join(os.path.dirname(__file__), "assets")
 
+# Global state management
+class State:
+    microphone = False
+
+state = State()
+
 # Generates a custom tile with run-time generated text and custom image via the
 # PIL module.
 def render_key_image(deck, icon_filename, label_text):
@@ -56,6 +62,10 @@ def key_change(deck, key, direction):
         run_if_not('firefox')
         run_if_not('code')
         run_if_not('terminator', 'terminator --working-directory=~/code')
+    elif key == 2:
+        pyautogui.hotkey('shift', 'ctrl', 'alt', 'F9') # global ubuntu hotkey mic on/off
+        state.microphone = not state.microphone
+        key_image(deck, 2, ('microphone-on.png' if state.microphone else 'microphone-off.png'))
     elif key == 4:
         os.system('systemctl suspend')
     elif key == 10:
@@ -79,6 +89,7 @@ if __name__ == "__main__":
 
         # render keys
         key_image(deck, 0, 'vs-code.png')
+        key_image(deck, 2, 'microphone-off.png')
         key_image(deck, 4, 'power.png')
         key_image(deck, 10, 'spotify.png')
         key_image(deck, 11, 'play-pause.png')
