@@ -82,8 +82,8 @@ if __name__ == "__main__":
         deck.set_brightness(50)
 
         # render keys
-        key_image(deck, 0, 'vs-code.png', 'Build')
-        key_image(deck, 4, 'pause.png', 'Suspend')
+        key_image(deck, 0, 'vs-code.png')
+        key_image(deck, 4, 'power.png')
         key_image(deck, 10, 'spotify.png')
         key_image(deck, 11, 'play-pause.png')
         key_image(deck, 12, 'next.png')
