@@ -1,9 +1,5 @@
 #!/usr/bin/env python3
 
-#
-# Quick way to call specific people
-#
-
 import os
 import threading
 import psutil
