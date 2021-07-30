@@ -16,12 +16,6 @@ from src.StreamDeck.ImageHelpers import PILHelper
 # Folder location of image assets used by this example.
 ASSETS_PATH = os.path.join(os.path.dirname(__file__), "assets")
 
-# Global state management
-class State:
-    play = False
-
-state = State()
-
 # Generates a custom tile with run-time generated text and custom image via the
 # PIL module.
 def render_key_image(deck, icon_filename, label_text):
@@ -68,16 +62,16 @@ def key_change(deck, key, direction):
         run_if_not('terminator', 'terminator --working-directory=~/code')
     elif key == 4:
         os.system('systemctl suspend')
-    elif key == 13:
+    elif key == 10:
         run_if_not('spotify')
+    elif key == 11:
+        pyautogui.hotkey('shift', 'ctrl', 'alt', 'F12') # global ubuntu hotkey play/pause
+    elif key == 12:
+        pyautogui.hotkey('shift', 'ctrl', 'alt', 'F1') # global ubuntu hotkey next track
+    elif key == 13:
+        pyautogui.hotkey('shift', 'ctrl', 'alt', 'F8') # global ubuntu hotkey volume down
     elif key == 14:
-        pyautogui.hotkey('shift', 'ctrl', 'alt', 'F12')
-        if state.play == True:
-            key_image(deck, 14, 'play.png')
-            state.play = False
-        else:
-            key_image(deck, 14, 'pause.png')
-            state.play = True
+        pyautogui.hotkey('shift', 'ctrl', 'alt', 'F11') # global ubuntu hotkey volume up
 
 if __name__ == "__main__":
     for index, deck in enumerate(DeviceManager().enumerate()):
@@ -90,8 +84,11 @@ if __name__ == "__main__":
         # render keys
         key_image(deck, 0, 'vs-code.png', 'Build')
         key_image(deck, 4, 'pause.png', 'Suspend')
-        key_image(deck, 13, 'spotify.png')
-        key_image(deck, 14, 'play.png')
+        key_image(deck, 10, 'spotify.png')
+        key_image(deck, 11, 'play-pause.png')
+        key_image(deck, 12, 'next.png')
+        key_image(deck, 13, 'volume-down.png')
+        key_image(deck, 14, 'volume-up.png')
 
         # actions
         deck.set_key_callback(key_change)
