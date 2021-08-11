@@ -1,0 +1,2 @@
+##ACTION=="add", SUBSYSTEM=="usb", RUN+="/bin/sh -c 'echo == >> /home/jakob/code/streamdeck/scenes/udev-env.txt; env >> /home/jakob/code/streamdeck/scenes/udev-env.txt'"
+##ACTION=="add", SUBSYSTEM=="usb", ENV{PRODUCT}=="fd9/80/200", RUN=="/bin/su jakob --command='/home/jakob/code/streamdeck/scenes/default.py'"
