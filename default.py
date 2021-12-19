@@ -59,9 +59,9 @@ def key_change(deck, key, direction):
         return
 
     if key == 0:
-        run_if_not('firefox')
-        run_if_not('code')
-        run_if_not('terminator', 'terminator --working-directory=~/code')
+        pyautogui.hotkey('winleft', '1')
+    elif key == 1:
+        pyautogui.hotkey('winleft', '4')
     elif key == 2:
         pyautogui.hotkey('shift', 'ctrl', 'alt', 'F9') # global ubuntu hotkey mic on/off
         state.microphone = not state.microphone
@@ -88,7 +88,8 @@ if __name__ == "__main__":
         deck.set_brightness(50)
 
         # render keys
-        key_image(deck, 0, 'vs-code.png')
+        key_image(deck, 0, 'firefox.png')
+        key_image(deck, 1, 'vs-code.png')
         key_image(deck, 2, 'microphone-off.png')
         key_image(deck, 4, 'power.png')
         key_image(deck, 10, 'spotify.png')
