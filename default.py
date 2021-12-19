@@ -4,6 +4,7 @@ import os
 import psutil
 import pyautogui
 import threading
+import subprocess
 
 from PIL import Image, ImageDraw, ImageFont
 from src.StreamDeck.DeviceManager import DeviceManager
@@ -53,6 +54,11 @@ def run_if_not(program, command = None):
     if is_running(program) == False:
         os.system(command or program)
 
+def microphone_set_state_icon():
+    mic_on = subprocess.check_output(['pulsemixer', '--id', '3', '--get-mute']) == b'0\n'
+    file = 'microphone-on.png' if mic_on else 'microphone-off.png'
+    key_image(deck, 7, file)
+
 def key_change(deck, key, direction):
     # only operate on key down
     if direction != 1:
@@ -62,10 +68,12 @@ def key_change(deck, key, direction):
         pyautogui.hotkey('winleft', '1')
     elif key == 1:
         pyautogui.hotkey('winleft', '4')
-    elif key == 2:
-        pyautogui.hotkey('shift', 'ctrl', 'alt', 'F9') # global ubuntu hotkey mic on/off
-        state.microphone = not state.microphone
-        key_image(deck, 2, ('microphone-on.png' if state.microphone else 'microphone-off.png'))
+    elif key == 7:
+        os.system('pulsemixer --id 3 --toggle-mute')
+        microphone_set_state_icon()
+        # pyautogui.hotkey('shift', 'ctrl', 'alt', 'F9') # global ubuntu hotkey mic on/off
+        # state.microphone = not state.microphone
+        # key_image(deck, 2, ('microphone-on.png' if state.microphone else 'microphone-off.png'))
     elif key == 4:
         os.system('systemctl suspend')
     elif key == 10:
@@ -90,13 +98,13 @@ if __name__ == "__main__":
         # render keys
         key_image(deck, 0, 'firefox.png')
         key_image(deck, 1, 'vs-code.png')
-        key_image(deck, 2, 'microphone-off.png')
         key_image(deck, 4, 'power.png')
         key_image(deck, 10, 'spotify.png')
         key_image(deck, 11, 'play-pause.png')
         key_image(deck, 12, 'next.png')
         key_image(deck, 13, 'volume-down.png')
         key_image(deck, 14, 'volume-up.png')
+        microphone_set_state_icon()
 
         # actions
         deck.set_key_callback(key_change)
