@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-import logging
 import os
 import psutil
 import pyautogui
@@ -81,18 +80,11 @@ def key_change(deck, key, direction):
         pyautogui.hotkey('shift', 'ctrl', 'alt', 'F11') # global ubuntu hotkey volume up
 
 if __name__ == "__main__":
-    log_path = os.path.join(os.path.dirname(__file__), "script.log")
-    logging.basicConfig(filename=log_path, encoding='utf-8', level=logging.DEBUG)
-
-    logging.debug('looking for devices')
     for index, deck in enumerate(DeviceManager().enumerate()):
-        logging.debug('opening device')
         deck.open()
-        logging.debug('resetting device')
         deck.reset()
 
         # Set initial screen brightness to 30%.
-        logging.debug('initializing default scene')
         deck.set_brightness(50)
 
         # render keys
