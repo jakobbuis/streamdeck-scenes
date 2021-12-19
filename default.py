@@ -44,16 +44,6 @@ def key_image(deck, key, asset, title = None):
     with deck:
         deck.set_key_image(key, image)
 
-def is_running(program):
-    for p in psutil.process_iter(attrs=['pid', 'name']):
-        if p.info['name'] == program:
-            return True
-    return False
-
-def run_if_not(program, command = None):
-    if is_running(program) == False:
-        os.system(command or program)
-
 def microphone_set_state_icon():
     mic_on = subprocess.check_output(['pulsemixer', '--id', '3', '--get-mute']) == b'0\n'
     file = 'microphone-on.png' if mic_on else 'microphone-off.png'
@@ -71,21 +61,8 @@ def key_change(deck, key, direction):
     elif key == 7:
         os.system('pulsemixer --id 3 --toggle-mute')
         microphone_set_state_icon()
-        # pyautogui.hotkey('shift', 'ctrl', 'alt', 'F9') # global ubuntu hotkey mic on/off
-        # state.microphone = not state.microphone
-        # key_image(deck, 2, ('microphone-on.png' if state.microphone else 'microphone-off.png'))
     elif key == 4:
         os.system('systemctl suspend')
-    elif key == 10:
-        run_if_not('spotify')
-    elif key == 11:
-        pyautogui.hotkey('shift', 'ctrl', 'alt', 'F12') # global ubuntu hotkey play/pause
-    elif key == 12:
-        pyautogui.hotkey('shift', 'ctrl', 'alt', 'F1') # global ubuntu hotkey next track
-    elif key == 13:
-        pyautogui.hotkey('shift', 'ctrl', 'alt', 'F8') # global ubuntu hotkey volume down
-    elif key == 14:
-        pyautogui.hotkey('shift', 'ctrl', 'alt', 'F11') # global ubuntu hotkey volume up
 
 if __name__ == "__main__":
     for index, deck in enumerate(DeviceManager().enumerate()):
@@ -99,11 +76,6 @@ if __name__ == "__main__":
         key_image(deck, 0, 'firefox.png')
         key_image(deck, 1, 'vs-code.png')
         key_image(deck, 4, 'power.png')
-        key_image(deck, 10, 'spotify.png')
-        key_image(deck, 11, 'play-pause.png')
-        key_image(deck, 12, 'next.png')
-        key_image(deck, 13, 'volume-down.png')
-        key_image(deck, 14, 'volume-up.png')
         microphone_set_state_icon()
 
         # actions
